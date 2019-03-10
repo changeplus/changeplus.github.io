@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>变PLUS电影</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all"> 
+<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css" />
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script charset="utf-8" type="text/javascript" src="js/clipboard.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.8/vue.js"></script>
+</head>
+<body class="bg" style="background:#000">
+	<div id="app" class="agile-main"> 
+		<div class="content-wrap">
+			<div class="content">
+	
+				<!-- properties -->
+				<div class="w3agile properties" style="background: #000;">
+					<div class="properties-top">
+						<h3 class="w3ls-title">热线电影</h3>
+						<p class="w3title-text">请保存好我们的网址，以便找到回家的路</p>
+						<div style="width:100%; text-align:center; background:#1e9c95; color:#fff; height: 50px; line-height: 50px; font-size: 18px; margin-top: 20px;"
+						>https://changeplus.github.io/</div>
+					</div> 
+
+					
+					<div @click="movitem(key)" class="properties-bottom" v-for="(item,key) in list">
+						<div class="properties-img" style="border-radius:20px" >
+							<img :src="item.imgurl">
+							<div style="text-align: center;height: 50px;line-height: 50px;font-size: 20px;font-family: inherit;">
+								<b>{{ item.name }}</b>
+							</div>
+						</div>
+					</div> 
+	
+
+				</div>
+			</div>
+		</div>
+	</div> 
+
+	<!-- menu-js -->
+</body>
+</html>
+
+<script>
+	new Vue({
+        el: '#app',
+        data: {
+			list:[],
+		},
+		mounted(){
+			$.ajax({
+				url:"/getmovlist.html",
+				success:(res)=>{
+					this.list = JSON.parse(res);
+				}
+			})
+		},
+
+        methods: {
+			movitem(key){
+				window.location.href = "/movitem.html?key=" + key;
+				console.log(key)
+			}
+        }
+	})
+	
+
+</script>

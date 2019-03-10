@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>变PLUS电影</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all"> 
+<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css" />
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<script charset="utf-8" type="text/javascript" src="js/clipboard.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.8/vue.js"></script>
+
+<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css" />
+<script charset="utf-8" type="text/javascript" src="https://g.alicdn.com/de/prismplayer/2.8.1/aliplayer-h5-min.js"></script>
+
+</head>
+<body class="bg" style="background:#000">
+	<div id="app" class="agile-main"> 
+		<div class="content-wrap">
+			<div class="content">
+	
+				<!-- properties -->
+				<div class="w3agile properties" style="background: #000;">
+
+
+					<div class="properties-bottom">
+						<div class="properties-img" style="border-radius:20px" v-if="cansee == false">
+							<img src="img/code.png">
+							<div style="text-align: center;height: 100px;line-height: 50px;font-size: 20px;font-family: inherit;">
+								<b>想看电影加这个微信吧！</b><br/>
+								微信号码：<b style="color:#f00">plus006688</b>
+							</div>
+						</div>
+					</div> 
+
+
+                    <div  class="prism-player" id="J_prismPlayer"></div>
+					<div class="properties-top">
+						<div @click="movindex" style="width:100%; text-align:center; background:#1e9c95; color:#fff; height: 50px; line-height: 50px; font-size: 18px; margin-top: 20px;"
+						>更多电影点这里</div>
+					</div> 
+
+				</div>
+			</div>
+		</div>
+	</div> 
+
+	<!-- menu-js -->
+</body>
+</html>
+
+<script>
+	new Vue({
+        el: '#app',
+        data: {
+            cansee:false
+		},
+		mounted(){
+			$.ajax({
+				url:"/getmovlist.html",
+				success:(res)=>{
+					var list = JSON.parse(res);
+                    var now_url = window.location.href;
+                    var canshu_str = now_url.split("?")[1];
+                    var canshu = canshu_str.split("&");
+
+                    var key = parseInt(canshu[0].replace("key=",""));
+                    var movdata = list[key];
+
+                    if(movdata['free'] == true){
+                        this.cansee = true;
+                        var player = new Aliplayer({
+                        id: 'J_prismPlayer',
+                        width: '100%',
+                        autoplay: true,
+                        source : movdata['url'],
+                        });
+                    }else{
+                        var canseelist = movdata['userlist'];
+                        if(canshu[1]){
+                            var user = parseInt(canshu[1].replace("user=",""));
+                            if(canseelist.indexOf(user) > -1){
+                                var now_time = Date.parse(new Date())/1000;
+                                if(now_time - user > 10800){
+                                    alert("对不起，您只有三小时的观看时间，请继续购买");
+                                }else{
+                                    this.cansee = true;
+                                    var player = new Aliplayer({
+                                    id: 'J_prismPlayer',
+                                    width: '100%',
+                                    autoplay: true,
+                                    source : movdata['url'],
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    
+				}
+			})
+		},
+
+        methods: {
+            movindex(){
+                window.location.href="/index.html";
+            }
+        }
+	})
+	
+
+</script>
