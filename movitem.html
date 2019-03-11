@@ -65,7 +65,7 @@
 	new Vue({
         el: '#app',
         data: {
-            cansee:false,
+            cansee:true,
             show:true,
 		},
 		mounted(){
@@ -114,7 +114,9 @@
                                     });
                                 }
                             }
-                        }
+                        }else{
+							this.cansee = false;
+						}
                     }
 
                     
