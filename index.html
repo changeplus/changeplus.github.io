@@ -70,7 +70,7 @@
 			}
 
 			$.ajax({
-				url:"/getmovlist.html",
+				url:"/getmovlist.html?suiji=" + Math.ceil(Math.random()*999999),
 				success:(res)=>{
 					this.list = JSON.parse(res);
 				}
