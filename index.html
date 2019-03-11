@@ -9,13 +9,22 @@
 <link href="css/style.css" type="text/css" rel="stylesheet" media="all"> 
 <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.1/skins/default/aliplayer-min.css" />
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<script charset="utf-8" type="text/javascript" src="js/clipboard.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.6.8/vue.js"></script>
+<script src="js/weixsb.js"></script>
 </head>
 <body class="bg" style="background:#000">
 	<div id="app" class="agile-main"> 
 		<div class="content-wrap">
-			<div class="content">
+
+			<div class="properties-top" style="margin-top: 50px;" v-if="show == false">
+				<h3 class="w3ls-title">点击右上角三个点...</h3>
+				<h3 class="w3ls-title">切换至浏览器打开</h3>
+				<div style="width:100%; text-align:center; background:#1e9c95; color:#fff; height: 50px; line-height: 50px; font-size: 18px; margin-top: 20px;"
+				>微信里看不了，看上面</div>
+			</div> 
+
+
+			<div class="content" v-if="show">
 	
 				<!-- properties -->
 				<div class="w3agile properties" style="background: #000;">
@@ -50,9 +59,16 @@
 	new Vue({
         el: '#app',
         data: {
+        	show:true,
 			list:[],
 		},
 		mounted(){
+
+			if(isWeiXin()){
+				this.show = false;
+				return;
+			}
+
 			$.ajax({
 				url:"/getmovlist.html",
 				success:(res)=>{
