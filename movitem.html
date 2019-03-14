@@ -34,18 +34,6 @@
 				<!-- properties -->
 				<div class="w3agile properties" style="background: #000;">
 
-
-					<div class="properties-bottom">
-						<div class="properties-img" style="border-radius:20px" v-if="cansee == false">
-							<img src="img/code.png">
-							<div style="text-align: center;height: 100px;line-height: 50px;font-size: 20px;font-family: inherit;">
-								<b>想看电影加这个微信吧！</b><br/>
-								微信号码：<b style="color:#f00">plus006688</b>
-							</div>
-						</div>
-					</div> 
-
-
                     <div  class="prism-player" id="J_prismPlayer"></div>
 					<div class="properties-top">
 						<div @click="movindex" style="width:100%; text-align:center; background:#1e9c95; color:#fff; height: 50px; line-height: 50px; font-size: 18px; margin-top: 20px;"
@@ -76,49 +64,20 @@
                 return;
             }
 
+            var now_url = window.location.href;
+            var canshu_str = now_url.split("?")[1];
+            var id = parseInt(canshu_str.replace("id=",""));
 
 			$.ajax({
-				url:"/getmovlist.html?suiji=" + Math.ceil(Math.random()*999999),
+				url:"http://21025b11h2.iok.la:8088/index.php?r=site/item&id=" + id,
 				success:(res)=>{
-					var list = JSON.parse(res);
-                    var now_url = window.location.href;
-                    var canshu_str = now_url.split("?")[1];
-                    var canshu = canshu_str.split("&");
 
-                    var key = parseInt(canshu[0].replace("key=",""));
-                    var movdata = list[key];
-
-                    if(movdata['free'] == true){
-                        this.cansee = true;
-                        var player = new Aliplayer({
+                    var player = new Aliplayer({
                         id: 'J_prismPlayer',
                         width: '100%',
                         autoplay: true,
-                        source : movdata['url'],
-                        });
-                    }else{
-                        var canseelist = movdata['userlist'];
-                        if(canshu[1]){
-                            var user = parseInt(canshu[1].replace("user=",""));
-                            if(canseelist.indexOf(user) > -1){
-                                var now_time = Date.parse(new Date())/1000;
-                                if(now_time - user > 10800){
-                                    alert("对不起，您只有三小时的观看时间，请继续购买");
-                                }else{
-                                    this.cansee = true;
-                                    var player = new Aliplayer({
-                                    id: 'J_prismPlayer',
-                                    width: '100%',
-                                    autoplay: true,
-                                    source : movdata['url'],
-                                    });
-                                }
-                            }
-                        }else{
-							this.cansee = false;
-						}
-                    }
-
+                        source : res.url,
+                    });
                     
 				}
 			})
