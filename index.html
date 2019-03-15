@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>±äPLUSµçÓ°</title> 
+<title>å˜PLUSç”µå½±</title> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="" />
@@ -17,10 +17,10 @@
 		<div class="content-wrap">
 
 			<div class="properties-top" style="margin-top: 50px;" v-if="show == false">
-				<h3 class="w3ls-title">µã»÷ÓÒÉÏ½ÇÈı¸öµã...</h3>
-				<h3 class="w3ls-title">ÇĞ»»ÖÁä¯ÀÀÆ÷´ò¿ª</h3>
+				<h3 class="w3ls-title">ç‚¹å‡»å³ä¸Šè§’ä¸‰ä¸ªç‚¹...</h3>
+				<h3 class="w3ls-title">åˆ‡æ¢è‡³æµè§ˆå™¨æ‰“å¼€</h3>
 				<div style="width:100%; text-align:center; background:#1e9c95; color:#fff; height: 50px; line-height: 50px; font-size: 18px; margin-top: 20px;"
-				>Î¢ĞÅÀï¿´²»ÁË£¬¿´ÉÏÃæ</div>
+				>å¾®ä¿¡é‡Œçœ‹ä¸äº†ï¼Œçœ‹ä¸Šé¢</div>
 			</div> 
 
 
@@ -29,8 +29,8 @@
 				<!-- properties -->
 				<div class="w3agile properties" style="background: #000;">
 					<div class="properties-top">
-						<h3 class="w3ls-title">ÈÈÏßµçÓ°({{ count }}²¿)</h3>
-						<p class="w3title-text">Çë±£´æºÃÎÒÃÇµÄÍøÖ·£¬ÒÔ±ãÕÒµ½»Ø¼ÒµÄÂ·</p>
+						<h3 class="w3ls-title">çƒ­çº¿ç”µå½±({{ count }}éƒ¨)</h3>
+						<p class="w3title-text">è¯·ä¿å­˜å¥½æˆ‘ä»¬çš„ç½‘å€ï¼Œä»¥ä¾¿æ‰¾åˆ°å›å®¶çš„è·¯</p>
 						<div style="width:100%; text-align:center; background:#1e9c95; color:#fff; height: 50px; line-height: 50px; font-size: 18px; margin-top: 20px;"
 						>https://changeplus.github.io/</div>
 					</div> 
@@ -47,7 +47,7 @@
  
 					<div class="properties-top" @click="getmore" v-if="list.length < count">
 						<div style="width:100%; text-align:center; background:#1e9c95; color:#fff; height: 50px; line-height: 50px; font-size: 18px; margin-top: 20px;"
-						>µã»÷»¹ÓĞ¸ü¶à</div>
+						>ç‚¹å‡»è¿˜æœ‰æ›´å¤š</div>
 					</div> 
 
 
@@ -61,45 +61,6 @@
 </html>
 
 <script>
-	new Vue({
-        el: '#app',
-        data: {
-        	show:true,
-			list:[],
-			count:'',
-		},
-		mounted(){
-
-			if(isWeiXin()){
-				this.show = false;
-				return;
-			}
-
-			$.ajax({
-				url:"http://21025b11h2.iok.la:8088/index.php?r=site/index",
-				success:(res)=>{
-					this.list = res.list;
-					this.count = res.count;
-				}
-			})
-		},
-
-        methods: {
-			movitem(id){
-				window.location.href = "/movitem.html?id=" + id;
-			},
-			getmore(){
-				$.ajax({
-				url:"http://21025b11h2.iok.la:8088/index.php?r=site/index&limit=" + (this.list.length + 10),
-				success:(res)=>{
-					this.list = res.list;
-					this.count = res.count;
-				}
-			})
-
-			}
-        }
-	})
 	new Vue({
         el: '#app',
         data: {
